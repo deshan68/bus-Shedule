@@ -12,7 +12,7 @@ export default function HomeScreen({ navigation }) {
           </View>
       </Pressable>
       <Pressable
-        onPress={() => navigation.navigate("DriverReg")}
+        onPress={() => navigation.navigate("WantToREg_and_AlreadyReg")}
         style={({ pressed }) => pressed && styles.pressedBtn}
       >
           <View style={styles.startButtns}>
