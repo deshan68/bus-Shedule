@@ -1,7 +1,19 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
+import SelectList from "react-native-dropdown-select-list";
 import { TextInput } from "react-native";
+import PassengerRoute from "./PassengerRoute_Screen";
+import { useState } from "react";
+
 
 export default function PassengerRegScreen() {
+  const [PassengerRoute_ModalIsVisible, Set_PassengerRoute_ModalIsVisible] = useState(false);
+
+  function Start_PassengerRoute_ModalIsVisible_Handler(){
+    Set_PassengerRoute_ModalIsVisible(true);
+  };
+  function End_PassengerRoute_ModalIsVisible_Handler(){
+    Set_PassengerRoute_ModalIsVisible(false);
+  }
   return (
     <View style={styles.container}>
       <View style={styles.title}>
@@ -20,7 +32,8 @@ export default function PassengerRegScreen() {
         </View>
       </View>
       <View style={{marginTop: 100,}}>
-        <Pressable style={({ pressed }) => pressed && styles.pressedBtn}>
+        <Pressable onPress={Start_PassengerRoute_ModalIsVisible_Handler} style={({ pressed }) => pressed && styles.pressedBtn}>
+          <PassengerRoute visible={PassengerRoute_ModalIsVisible} onCancel={End_PassengerRoute_ModalIsVisible_Handler}/>
           <View style={styles.nexttButtns}>
             <Text style={styles.nexttButtnsTerxt}>Next</Text>
           </View>
