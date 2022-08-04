@@ -17,7 +17,7 @@ export default function WantToREg_and_AlreadyReg_Screnn({navigation}) {
           style={({ pressed }) => pressed && styles.pressedBtn}
         >
           <View style={styles.startButtns}>
-            <Text style={styles.startButtnsText}>Already Register?</Text>
+            <Text style={styles.startButtnsText}>Already Registered?</Text>
           </View>
         </Pressable>
       </View>

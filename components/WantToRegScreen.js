@@ -1,7 +1,19 @@
 import { StyleSheet, Text, View, Pressable } from "react-native";
 import { TextInput } from "react-native";
+import SelectBusRoute from "./SelectBusRouteScreen";
+import { useState } from "react";
+
+
 
 export default function WantToRegScreen() {
+  const [SelectBusRoute_ModalIsVisible, SetSelectBusRoute_ModalIsVisible] = useState(false);
+
+  function Start_SelectBusRoute_ModalIsVisible_handler(){
+    SetSelectBusRoute_ModalIsVisible(true);
+  }
+function End_SelectBusRoute_ModalIsVisible_handler(){
+  SetSelectBusRoute_ModalIsVisible(false);
+}
   return (
     <View style={styles.container}>
       <View style={styles.title}>
@@ -32,7 +44,9 @@ export default function WantToRegScreen() {
         </View>
       </View>
       <View style={{ marginTop: 50 }}>
-        <Pressable style={({ pressed }) => pressed && styles.pressedBtn}>
+        <Pressable onPress={Start_SelectBusRoute_ModalIsVisible_handler}  style={({ pressed }) => pressed && styles.pressedBtn}>
+        <SelectBusRoute visible={SelectBusRoute_ModalIsVisible} OnCancel= {End_SelectBusRoute_ModalIsVisible_handler}/>
+
           <View style={styles.nexttButtns}>
             <Text style={styles.nexttButtnsTerxt}>Next</Text>
           </View>
