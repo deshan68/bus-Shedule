@@ -4,10 +4,11 @@ import { useState } from "react";
 import SubmittedSuccessfully from "./SubmittedSuccessfully_Screen";
 import { firebase } from "../src/firebase/config";
 
-export default function PassengerRoute({ navigation }) {
+export default function DriverRoute({ route, navigation }) {
   const [selected1, setSelected1] = useState("");
   const [selected2, setSelected2] = useState("");
-  const PssenRegRef = firebase.firestore().collection("Passengers_Routes");
+  const DrvRegRef = firebase.firestore().collection("Driver_Routes");
+  const {depTimeText} = route.params;
 
   let startBusStand;
   let endBusStand;
@@ -35,7 +36,7 @@ export default function PassengerRoute({ navigation }) {
     { key: "7", value: "Kadawatha" },
   ];
 
-  function PassengerRouteAdd() {
+  function DriverRouteAdd() {
     if (selected1 && selected2 != "") {
       startBusStand = data1[parseInt(selected1) - 1].value;
       endBusStand = data2[parseInt(selected2) - 1].value;
@@ -44,13 +45,14 @@ export default function PassengerRoute({ navigation }) {
       const data = {
         Start_Stand: startBusStand,
         End_Stand: endBusStand,
+        Depature_Time: depTimeText
       };
-      PssenRegRef.add(data)
+      DrvRegRef.add(data)
         .then()
         .catch((error) => {
           alert(error);
         });
-      navigation.navigate("PassengerResult", {
+      navigation.navigate("SubmittedSuccessfully", {
         startBusStand: startBusStand,
         endBusStand: endBusStand,
       });
@@ -91,11 +93,11 @@ export default function PassengerRoute({ navigation }) {
       <View style={styles.ButtonsContainer}>
         <View style={{ marginTop: 0 }}>
           <Pressable
-            onPress={PassengerRouteAdd}
+            onPress={DriverRouteAdd}
             style={({ pressed }) => pressed && styles.pressedBtn}
           >
             <View style={styles.nexttButtns}>
-              <Text style={styles.nexttButtnsTerxt}>Search</Text>
+              <Text style={styles.nexttButtnsTerxt}>Send</Text>
             </View>
           </Pressable>
         </View>

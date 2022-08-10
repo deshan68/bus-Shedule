@@ -3,17 +3,34 @@ import SelectList from "react-native-dropdown-select-list";
 import { TextInput } from "react-native";
 import PassengerRoute from "./PassengerRoute_Screen";
 import { useState } from "react";
+import { firebase } from "../src/firebase/config";
 
+export default function PassengerRegScreen({ navigation }) {
 
-export default function PassengerRegScreen() {
-  const [PassengerRoute_ModalIsVisible, Set_PassengerRoute_ModalIsVisible] = useState(false);
+  const [fNameText, setfNameText] = useState("");
+  const [lNameText, setlNameText] = useState("");
+  const DrvRegRef = firebase.firestore().collection("registered_passengers");
 
-  function Start_PassengerRoute_ModalIsVisible_Handler(){
-    Set_PassengerRoute_ModalIsVisible(true);
-  };
-  function End_PassengerRoute_ModalIsVisible_Handler(){
-    Set_PassengerRoute_ModalIsVisible(false);
+  function PassengerNameAdd() {
+    if (fNameText.length && lNameText.length > 0) {
+      const data = {
+        Fname: fNameText,
+        Lname: lNameText,
+      };
+      DrvRegRef.add(data)
+        .then()
+        .catch((error) => {
+          alert(error);
+        });
+        navigation.navigate("PassengerRoute")
+    } else {
+      alert("Fill the Feild(s)");
+    }
+    setfNameText("");
+    setlNameText("");
   }
+
+
   return (
     <View style={styles.container}>
       <View style={styles.title}>
@@ -24,16 +41,31 @@ export default function PassengerRegScreen() {
       <View style={styles.textInputTitleContainer}>
         <View style={{ paddingBottom: 10 }}>
           <Text style={styles.textInputTitle}>First Name</Text>
-          <TextInput style={styles.textField} />
+          <TextInput
+            onChangeText={setfNameText}
+            value={fNameText}
+            style={styles.textField}
+          />
         </View>
         <View>
           <Text style={styles.textInputTitle}>Last Name</Text>
-          <TextInput style={styles.textField} />
+          <TextInput
+            onChangeText={setlNameText}
+            value={lNameText}
+            style={styles.textField}
+          />
         </View>
       </View>
-      <View style={{marginTop: 100,}}>
-        <Pressable onPress={Start_PassengerRoute_ModalIsVisible_Handler} style={({ pressed }) => pressed && styles.pressedBtn}>
-          <PassengerRoute visible={PassengerRoute_ModalIsVisible} onCancel={End_PassengerRoute_ModalIsVisible_Handler}/>
+      <View style={{ marginTop: 100 }}>
+        <Pressable
+          onPress={PassengerNameAdd}
+          style={({ pressed }) => pressed && styles.pressedBtn}
+        >
+          {/* <PassengerRoute
+            visible={PassengerRoute_ModalIsVisible}
+            onCancel={End_PassengerRoute_ModalIsVisible_Handler}
+          /> */}
+
           <View style={styles.nexttButtns}>
             <Text style={styles.nexttButtnsTerxt}>Next</Text>
           </View>

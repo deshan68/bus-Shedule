@@ -1,8 +1,13 @@
 import { Text, View, Modal, Pressable, Image, StyleSheet } from "react-native";
 
-export default function SubmittedSuccessfully(props) {
+
+export default function SubmittedSuccessfully({ route, navigation }) {
+
+  const { startBusStand, endBusStand } = route.params;
+  // console.log(startBusStand);
+  // console.log(endBusStand);
   return (
-    <Modal visible={props.visible} animationType="slide">
+    // <Modal visible={props.visible} animationType="slide">
       <View style={styles.container}>
         <View>
           <Image
@@ -17,7 +22,7 @@ export default function SubmittedSuccessfully(props) {
         </View>
         <View style={{ marginTop: 30 }}>
           <Pressable
-            onPress={props.onCancel}
+            onPress={() => navigation.navigate("Home")}
             style={({ pressed }) => pressed && styles.pressedBtn}
           >
             <View style={styles.nexttButtns}>
@@ -26,7 +31,7 @@ export default function SubmittedSuccessfully(props) {
           </Pressable>
         </View>
       </View>
-    </Modal>
+    // </Modal>
   );
 }
 
