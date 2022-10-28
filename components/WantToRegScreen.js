@@ -11,7 +11,7 @@ export default function WantToRegScreen({ navigation }) {
   const [phoneNumText, setPhoneNumText] = useState("");
   const [busNumText, setBusNumText] = useState("");
   const [busColorText, setBusColorText] = useState("");
-  const [depTimeText, setDepTimeText] = useState("");
+  // const [depTimeText, setDepTimeText] = useState("");
 
   const DrvRegRef = firebase.firestore().collection("registered_drivers");
 
@@ -21,7 +21,7 @@ export default function WantToRegScreen({ navigation }) {
       lNameText.length &&
       phoneNumText.length &&
       busNumText.length &&
-      depTimeText.length &&
+      // depTimeText.length &&
       busColorText.length > 0
     ) {
       const data = {
@@ -37,7 +37,6 @@ export default function WantToRegScreen({ navigation }) {
           alert(error);
         });
       navigation.navigate("DriverRoute", {
-        depTimeText : depTimeText
       });
 
 
@@ -50,7 +49,7 @@ export default function WantToRegScreen({ navigation }) {
     setPhoneNumText("");
     setBusNumText("");
     setBusColorText("");
-    setDepTimeText("");
+    // setDepTimeText("");
   }
 
   
@@ -102,14 +101,7 @@ export default function WantToRegScreen({ navigation }) {
             style={styles.textField}
           />
         </View>
-        <View style={styles.textAndTextFieldContainer}>
-          <Text style={styles.textInputTitle}>Depature Time :</Text>
-          <TextInput
-            onChangeText={setDepTimeText}
-            value={depTimeText}
-            style={styles.textField}
-          />
-        </View>
+
       </View>
       <View style={{ marginTop: 50 }}>
         <Pressable

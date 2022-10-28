@@ -15,10 +15,9 @@ export default function PassengerResult({ route, navigation }) {
   const DrvRegRef = firebase.firestore().collection("Driver_Routes");
   const [entityText, setEntityText] = useState("");
   const [entities, setEntities] = useState([]);
+  const [noDataFoundMsgHndlr, setNoDataFoundMsgHndlr] = useState(false);
 
-  console.log(startBusStand);
-  console.log(endBusStand);
-  console.log(entities);
+
 
   useEffect(() => {
     DrvRegRef.where("Start_Stand", "==", startBusStand)
@@ -32,6 +31,7 @@ export default function PassengerResult({ route, navigation }) {
             newEntities.push(entity);
           });
           setEntities(newEntities);
+          setNoDataFoundMsgHndlr(true);
         },
         (error) => {
           console.log(error);
@@ -53,16 +53,7 @@ export default function PassengerResult({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      {entities.length != 0 ? (
-        <View style={styles.listContainer}>
-          <FlatList
-            data={entities}
-            renderItem={renderEntity}
-            // keyExtractor={(item) => item.id}
-            // removeClippedSubviews={true}
-          />
-        </View>
-      ) : (
+      {entities.length == 0 &&  noDataFoundMsgHndlr == true ? (
         <View style={styles.container}>
           <View>
             <Image
@@ -86,6 +77,15 @@ export default function PassengerResult({ route, navigation }) {
             </Pressable>
           </View>
         </View>
+      ) : (
+        <View style={styles.listContainer}>
+          <FlatList
+            data={entities}
+            renderItem={renderEntity}
+            // keyExtractor={(item) => item.id}
+            // removeClippedSubviews={true}
+          />
+        </View>
       )}
     </View>
   );
@@ -95,20 +95,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#E8F9FD",
+    width: "100%"
   },
 
   listContainer: {
-    marginTop: 40,
+    marginTop: 80,
     padding: 20,
+    height: "100%",
+    width: "100%",
   },
   entityContainer: {
     marginTop: 10,
-    borderColor: "#cccccc",
-    borderWidth: 1,
     padding: 20,
-    borderRadius: 10,
-    width: 600,
     backgroundColor: "#999eec",
+
   },
   entityText: {
     fontSize: 20,
@@ -118,12 +120,7 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
   },
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#E8F9FD",
-  },
+
   nexttButtns: {
     backgroundColor: "#2155CD",
     width: 150,

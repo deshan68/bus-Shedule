@@ -39,8 +39,8 @@ export default function PassengerRoute({ navigation }) {
     if (selected1 && selected2 != "") {
       startBusStand = data1[parseInt(selected1) - 1].value;
       endBusStand = data2[parseInt(selected2) - 1].value;
-      console.log(startBusStand);
-      console.log(endBusStand);
+      // console.log(startBusStand);
+      // console.log(endBusStand);
       const data = {
         Start_Stand: startBusStand,
         End_Stand: endBusStand,

@@ -68,7 +68,7 @@ export default function App() {
           options={{ headerShown: false }}
           name="SubmittedSuccessfully"
           component={SubmittedSuccessfully}
-        />
+        />   
       </Stack.Navigator>
     </NavigationContainer>
   );

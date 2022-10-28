@@ -1,4 +1,11 @@
-import { View, Text, StyleSheet, Modal, Pressable } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Modal,
+  Pressable,
+  TextInput,
+} from "react-native";
 import SelectList from "react-native-dropdown-select-list";
 import { useState } from "react";
 import SubmittedSuccessfully from "./SubmittedSuccessfully_Screen";
@@ -7,8 +14,10 @@ import { firebase } from "../src/firebase/config";
 export default function DriverRoute({ route, navigation }) {
   const [selected1, setSelected1] = useState("");
   const [selected2, setSelected2] = useState("");
+  const [depTimeText, setDepTimeText] = useState("");
+
   const DrvRegRef = firebase.firestore().collection("Driver_Routes");
-  const {depTimeText} = route.params;
+  // const {depTimeText} = route.params;
 
   let startBusStand;
   let endBusStand;
@@ -45,7 +54,7 @@ export default function DriverRoute({ route, navigation }) {
       const data = {
         Start_Stand: startBusStand,
         End_Stand: endBusStand,
-        Depature_Time: depTimeText
+        Depature_Time: depTimeText,
       };
       DrvRegRef.add(data)
         .then()
@@ -89,6 +98,16 @@ export default function DriverRoute({ route, navigation }) {
           data={data2}
           // onSelect={() => alert(selected)}
         />
+      </View>
+      <View style={styles.DipTimetitle}>
+        <View style={styles.textAndTextFieldContainer}>
+          <Text style={styles.textInputTitle}>Depature Time :</Text>
+          <TextInput
+            onChangeText={setDepTimeText}
+            value={depTimeText}
+            style={styles.textField}
+          />
+        </View>
       </View>
       <View style={styles.ButtonsContainer}>
         <View style={{ marginTop: 0 }}>
@@ -150,9 +169,25 @@ const styles = StyleSheet.create({
   ButtonsContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    width: "100%",
   },
   pressedBtn: {
     opacity: 0.5,
+  },
+  textAndTextFieldContainer: {
+    marginHorizontal: 15,
+  },
+  textInputTitle: {
+    fontSize: 20,
+    marginBottom: 0,
+  },
+  textField: {
+    borderBottomColor: "#AEA7A7",
+    borderBottomWidth: 1,
+    fontSize: 17,
+    marginTop: 6
+  },
+  DipTimetitle: {
+    width: "100%",
+    paddingHorizontal: 35,
   },
 });
